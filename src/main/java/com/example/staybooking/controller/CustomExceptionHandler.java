@@ -1,5 +1,6 @@
 package com.example.staybooking.controller;
 
+import com.example.staybooking.exception.GCSUploadException;
 import com.example.staybooking.exception.UserAlreadyExistException;
 import com.example.staybooking.exception.UserNotExistException;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,15 @@ public class CustomExceptionHandler {
     @ExceptionHandler(UserAlreadyExistException.class)
     public final ResponseEntity<String> handleUserAlreadyExistExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
-    } //aspect 面向切面编程
+    }
 
     @ExceptionHandler(UserNotExistException.class)
     public final ResponseEntity<String> handleUserNotExistExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(GCSUploadException.class)
+    public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
